@@ -715,9 +715,9 @@ void ParseStringTableUpdate( CBitRead &buf, int entries, int nMaxEntries, int us
 
 			if ( g_bDumpStringTables )
 			{
-				printf( "player info\n{\n %s:true\n xuid:%" PRId64 "\n name:%s\n userID:%d\n guid:%s\n friendsID:%d\n friendsName:%s\n fakeplayer:%d\n ishltv:%d\n filesDownloaded:%d\n}\n",
-					bAdded ? "adding" : "updating", playerInfo.xuid, playerInfo.name, playerInfo.userID, playerInfo.guid, playerInfo.friendsID,
-					playerInfo.friendsName, playerInfo.fakeplayer, playerInfo.ishltv, playerInfo.filesDownloaded );
+                printf( "player info\n{\n %s:true\n xuid:%" PRId64 "\n name:%s\n userID:%d\n guid:%s\n friendsID:%d\n friendsName:%s\n fakeplayer:%d\n ishltv:%d\n filesDownloaded:%d\n entity:%d\n}\n",
+                    bAdded ? "adding" : "updating", playerInfo.xuid, playerInfo.name, playerInfo.userID, playerInfo.guid, playerInfo.friendsID,
+                        playerInfo.friendsName, playerInfo.fakeplayer, playerInfo.ishltv, playerInfo.filesDownloaded, playerInfo.entityID );
 			}
 		}
 		else
