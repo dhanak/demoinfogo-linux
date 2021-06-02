@@ -1410,6 +1410,9 @@ void CDemoFileDump::HandleDemoPacket()
 
 	CBitRead buf( data, NET_MAX_PAYLOAD );
 	int length = m_demofile.ReadRawData( ( char* )buf.GetBasePointer(), buf.GetNumBytesLeft() );
+	if (length < 0) {
+		fprintf( stderr, "CDemoFileDump::HandleDemoPacket() failed\n" );
+	}
 	buf.Seek( 0 );
 	DumpDemoPacket( buf, length );
 }
@@ -1708,7 +1711,9 @@ void CDemoFileDump::DoDump()
 
 			case dem_consolecmd:
 				{
-					m_demofile.ReadRawData( NULL, 0 );
+					if (m_demofile.ReadRawData( NULL, 0 ) < 0) {
+						fprintf( stderr, "CDemoFileDump::DoDump() unexpected payload\n" );
+					}
 				}
 				break;
 
@@ -1716,7 +1721,9 @@ void CDemoFileDump::DoDump()
 				{
 					char *data = ( char * )malloc( DEMO_RECORD_BUFFER_SIZE );
 					CBitRead buf( data, DEMO_RECORD_BUFFER_SIZE );
-					m_demofile.ReadRawData( ( char* )buf.GetBasePointer(), buf.GetNumBytesLeft() );
+					if (m_demofile.ReadRawData( ( char* )buf.GetBasePointer(), buf.GetNumBytesLeft() ) < 0) {
+						fprintf( stderr, "CDemoFileDump::DoDump() dem_datatables read failed\n" );
+					}
 					buf.Seek( 0 );
 					if ( !ParseDataTable( buf ) )
 					{
@@ -1730,7 +1737,9 @@ void CDemoFileDump::DoDump()
 				{
 					char *data = ( char * )malloc( DEMO_RECORD_BUFFER_SIZE );
 					CBitRead buf( data, DEMO_RECORD_BUFFER_SIZE );
-					m_demofile.ReadRawData( ( char* )buf.GetBasePointer(), buf.GetNumBytesLeft() );
+					if (m_demofile.ReadRawData( ( char* )buf.GetBasePointer(), buf.GetNumBytesLeft() ) < 0) {
+						fprintf( stderr, "CDemoFileDump::DoDump() dem_stringtables read failed\n" );
+					}
 					buf.Seek( 0 );
 					if ( !DumpStringTables( buf ) )
 					{
